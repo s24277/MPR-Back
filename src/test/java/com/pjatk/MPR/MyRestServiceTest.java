@@ -33,7 +33,7 @@ public class MyRestServiceTest {
     @Test
     public void findFinds(){
         String name = "Krieg";
-        Cow cow = new Cow(name,16);
+        Cow cow = new Cow(1L,name,16);
         when(repository.findByName(name)).thenReturn(cow);
 
         Cow result = cowservice.getCowByName(name);
@@ -41,9 +41,10 @@ public class MyRestServiceTest {
     }
     @Test
     public void saveSaves() throws AlreadyExists {
+        Long id = 1L;
         String name = "Krieg's mom";
         Integer age = 20;
-        Cow cow = new Cow(name,age);
+        Cow cow = new Cow(id,name,age);
         ArgumentCaptor<Cow> captor = ArgumentCaptor.forClass(Cow.class);
         when(repository.save(captor.capture())).thenReturn(cow);
 
@@ -56,7 +57,7 @@ public class MyRestServiceTest {
 
     @Test
     public void addCowThrowsAlreadyExists() throws AlreadyExists {
-        Cow cow = new Cow("Greg",3);
+        Cow cow = new Cow(1L,"Greg",3);
         when(repository.findByName("Greg")).thenReturn(new Cow());
 
         assertThrows(AlreadyExists.class,() -> cowservice.addCow(cow));

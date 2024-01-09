@@ -36,7 +36,7 @@ public class CowControllerTest {
 
     @Test
     public void getByNameReturns200WhenCowIsPresent() throws Exception {
-        Cow cow = new Cow("Bernard", 6);
+        Cow cow = new Cow(1L,"Bernard", 6);
         when(service.getCowByName("Bernard")).thenReturn(cow);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/cow/Bernard"))

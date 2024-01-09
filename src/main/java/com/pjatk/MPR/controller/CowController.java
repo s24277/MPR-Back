@@ -34,7 +34,7 @@ public class CowController {
     }
     @GetMapping(value = "/cowNew")
     public String getAddView(Model model){
-        model.addAttribute("cow",new Cow("", 0));
+        model.addAttribute("cow",new Cow(1L,"", 0));
         return "cowNew";
     }
 
