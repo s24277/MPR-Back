@@ -34,14 +34,14 @@ public class CowControllerTest {
         this.mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
     }
 
-    @Test
-    public void getByNameReturns200WhenCowIsPresent() throws Exception {
-        Cow cow = new Cow(1L,"Bernard", 6);
-        when(service.getCowByName("Bernard")).thenReturn(cow);
-
-        mockMvc.perform(MockMvcRequestBuilders.get("/cow/Bernard"))
-                .andExpect(status().isOk());
-    }
+//    @Test
+//    public void getByNameReturns200WhenCowIsPresent() throws Exception {
+//        Cow cow = new Cow(1L,"Bernard", 6);
+//        when(service.getCowByName("Bernard")).thenReturn(cow);
+//
+//        mockMvc.perform(MockMvcRequestBuilders.get("/cow/Bernard"))
+//                .andExpect(status().isOk());
+//    }
 
     @Test
     public void cowDelDeletesCowsReturns204() throws Exception {

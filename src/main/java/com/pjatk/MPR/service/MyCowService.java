@@ -6,6 +6,7 @@ import com.pjatk.MPR.repository.CowRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MyCowService {
@@ -16,8 +17,8 @@ public class MyCowService {
         this.cowRepository = cowRepository;
     }
 
-    public Cow getCowByName(String name) {
-        return cowRepository.findByName(name);
+    public Optional<Cow> getCowById(Long id) {
+        return cowRepository.findById(id);
     }
 
     public List<Cow> getAllCows() {
@@ -25,11 +26,7 @@ public class MyCowService {
     }
 
     public void addCow(Cow cow) throws AlreadyExists {
-        if(cowRepository.findByName(cow.getName()) != null){
-            throw new AlreadyExists("Cow already exists");
-        }
         cowRepository.save(cow);
-
     }
 
     public void deleteCowByName(String name) {
@@ -37,5 +34,9 @@ public class MyCowService {
         if (cow != null) {
             cowRepository.delete(cow);
         }
+    }
+
+    public void updateCow(Cow cowToUpdate) {
+        cowRepository.save(cowToUpdate);
     }
 }

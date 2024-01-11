@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class CowController {
@@ -18,14 +19,9 @@ public class CowController {
         this.restService = restService;
     }
 
-    @GetMapping("/cow/{name}")
-    public Cow getCowByName(@PathVariable("name") String name) {
-        return this.restService.getCowByName(name);
-    }
-
-    @GetMapping("/greeting")
-    public String greeting() {
-        return "works";
+    @GetMapping("/cow/{id}")
+    public Optional<Cow> getCowById(@PathVariable("id") Long id) {
+        return this.restService.getCowById(id);
     }
 
     @GetMapping("/showCow")
@@ -38,22 +34,23 @@ public class CowController {
         return "cowNew";
     }
 
-   // @PostMapping(value = "/cowNew")
-    //public String cowNew(){
-    //}
-
     @PostMapping("/cowNew")
     public void cowNew(@RequestBody Cow cow) throws AlreadyExists {
         this.restService.addCow(cow);
     }
 
     @PutMapping("/editCow/{id}")
-    public void cowEdit(){
+    public void cowEdit(@PathVariable("id") Long id, @RequestBody Cow updatedCow){
+        Optional<Cow> existingCow = this.restService.getCowById(id);
+            Cow cowToUpdate = existingCow.get();
+            cowToUpdate.setName(updatedCow.getName());
+            cowToUpdate.setAge(updatedCow.getAge());
 
+            this.restService.updateCow(cowToUpdate);
     }
 
-    @DeleteMapping("/cowDel/{name}")
-    public void cowDel(@PathVariable("name") String name) {
+    @DeleteMapping("/cowDel/{id}")
+    public void cowDel(@PathVariable("id") String name) {
         this.restService.deleteCowByName(name);
     }
 
